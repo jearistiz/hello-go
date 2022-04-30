@@ -12,3 +12,18 @@ $ go mod init [your-module-sourcecode-url]
 
 Enables dependency tracking of your module by creating a `go.mod` file in the project's root directory.
 This file contains your code dependencies as well as a path-URL to find your code [possibly online].
+
+---
+
+```sh
+$ go mod tidy
+```
+
+From the official documendation:
+*Tidy makes sure `go.mod` matches the source code in the module.
+It adds any missing modules necessary to build the current module's
+packages and dependencies, and it removes unused modules that
+don't provide any relevant packages. It also adds any missing entries
+to go.sum and removes any unnecessary ones*
+
+---
