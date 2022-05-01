@@ -1,3 +1,4 @@
+########################
 ### GO .gitingnore files
 
 # Binaries for programs and plugins
@@ -19,6 +20,8 @@
 # Go workspace file
 go.work
 
+
+##########################
 ### macOS .gitignore files
 
 # General
@@ -48,3 +51,13 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+###########################
+### VSCode .gitignore files
+**/.vscode/**
+
+# Local History for Visual Studio Code
+**/.history/
+
+# Built Visual Studio Code Extensions
+**/*.vsix
