@@ -11,6 +11,8 @@ import (
 	"example/greetings"
 )
 
+const inputName bool = false
+
 func main() {
 	simpleMain()
 	errorHandlingMain()
@@ -31,18 +33,25 @@ func errorHandlingMain() {
 	log.SetPrefix("errorHandlingMain: ")
 	logStartExec()
 
-	// Scan name from terminal
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print(">>> Type your name, then press Enter: ")
-	fullName, err := reader.ReadString('\n')
+	var fullName string
+	var err error
 
-	// Handling error from ReadString function
-	if err != nil {
-		logFatalEndWithError(err)
+	if inputName {
+		// Scan name from terminal
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print(">>> Type your name, then press Enter: ")
+		fullName, err = reader.ReadString('\n')
+		fullName = fullName[:len(fullName)-1]
+		// Handling error from ReadString function
+		if err != nil {
+			logFatalEndWithError(err)
+		}
+	} else {
+		fullName = "Juan Esteban"
 	}
 
 	// Call HelloWithError funcition using user input name
-	message, err := greetings.HelloWithError(fullName[:len(fullName)-1])
+	message, err := greetings.HelloWithError(fullName)
 	// Handling error from HelloWithError function
 	if err != nil {
 		logFatalEndWithError(err)
