@@ -27,3 +27,9 @@ don't provide any relevant packages. It also adds any missing entries
 to go.sum and removes any unnecessary ones*
 
 ---
+
+```sh
+go mod edit -replace example/greetings=../greetings
+```
+
+Tells go.mod where to find a local package. In this case it tells to find `example/greetings` in `../greetings`. This is only recommended for code that is used locally.
