@@ -11,12 +11,15 @@ import (
 	"example/greetings"
 )
 
-const inputName bool = false
-
 func main() {
 	simpleMain()
 	errorHandlingMain()
+	randomHelloMain()
 }
+
+const useInputName bool = true
+const defaultName string = "Juan Esteban"
+const msgInputName string = ">>> Type your name, then press Enter: "
 
 func simpleMain() {
 	log.SetPrefix("simpleMain: ")
@@ -34,25 +37,16 @@ func errorHandlingMain() {
 	logStartExec()
 
 	var fullName string
-	var err error
 
-	if inputName {
-		// Scan name from terminal
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print(">>> Type your name, then press Enter: ")
-		fullName, err = reader.ReadString('\n')
-		fullName = fullName[:len(fullName)-1]
-		// Handling error from ReadString function
-		if err != nil {
-			logFatalEndWithError(err)
-		}
+	if useInputName {
+		fullName = inputFromTerminal(msgInputName)
 	} else {
-		fullName = "Juan Esteban"
+		fullName = defaultName
 	}
 
-	// Call HelloWithError funcition using user input name
+	// Common error handling in Go: the function returns an error and the
+	// client checks for the error
 	message, err := greetings.HelloWithError(fullName)
-	// Handling error from HelloWithError function
 	if err != nil {
 		logFatalEndWithError(err)
 	}
@@ -60,6 +54,38 @@ func errorHandlingMain() {
 	fmt.Println(message)
 
 	logEndExec()
+}
+
+func randomHelloMain() {
+	log.SetPrefix("randomHelloMain: ")
+	logStartExec()
+
+	var fullName string
+
+	if useInputName {
+		fullName = inputFromTerminal(msgInputName)
+	} else {
+		fullName = defaultName
+	}
+
+	message, err := greetings.RandomHello(fullName)
+	if err != nil {
+		logFatalEndWithError(err)
+	}
+
+	fmt.Println(message)
+
+	logEndExec()
+}
+
+func inputFromTerminal(inputMsg string) string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print(inputMsg)
+	fullName, err := reader.ReadString('\n')
+	if err != nil {
+		logFatalEndWithError(err)
+	}
+	return fullName[:len(fullName)-1]
 }
 
 func logStartExec() {
