@@ -17,43 +17,52 @@ func main() {
 }
 
 func simpleMain() {
-	fmt.Println("\n--- Start simpleMain exec ---")
+	log.SetPrefix("simpleMain: ")
+	logStartExec()
 
 	message := greetings.Hello("Jose David")
 	fmt.Println(message)
 	fmt.Println(quote.Go())
 
-	fmt.Println("--- End simpleMain exec ---")
+	logEndExec()
 }
 
 func errorHandlingMain() {
-
-	fmt.Println("\n--- Start errorHandlingMain exec ---")
-	// Sets the Logger prefix
-	log.SetPrefix("greetings: ")
-	// Avoids printing time, source file and line number in logs
-	// log.SetFlags(0)
+	log.SetPrefix("errorHandlingMain: ")
+	logStartExec()
 
 	// Scan name from terminal
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Type your name, then press Enter: ")
+	fmt.Print(">>> Type your name, then press Enter: ")
 	fullName, err := reader.ReadString('\n')
 
 	// Handling error from ReadString function
 	if err != nil {
-		msg := fmt.Sprintf("\n--- End errorHandlingMain exec with errors: %v---", err)
-		log.Fatal(msg)
+		logFatalEndWithError(err)
 	}
 
 	// Call HelloWithError funcition using user input name
 	message, err := greetings.HelloWithError(fullName[:len(fullName)-1])
 	// Handling error from HelloWithError function
 	if err != nil {
-		msg := fmt.Sprintf("\n--- End errorHandlingMain exec with errors: %v---", err)
-		log.Fatal(msg)
+		logFatalEndWithError(err)
 	}
 
 	fmt.Println(message)
 
-	fmt.Println("--- End errorHandlingMain exec ---")
+	logEndExec()
+}
+
+func logStartExec() {
+	fmt.Println()
+	log.Println("--- Start execution ---")
+}
+
+func logEndExec() {
+	log.Println("--- End execution ---")
+}
+
+func logFatalEndWithError(err error) {
+	msg := fmt.Sprintf("--- End execution with errors: %v---", err)
+	log.Fatal(msg)
 }
