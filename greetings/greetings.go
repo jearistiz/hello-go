@@ -12,7 +12,7 @@ const defaultHelloMsg string = "Hi, %v. Welcome to ON THE GO!"
 var helloFormattedMsgs = [...]string{
 	defaultHelloMsg,
 	"Hello, %v. We are ON THE GO! Are you?",
-	"Greetings, %v. It's a pleasuere. We are ON THE GO!",
+	"Greetings, %v. Do you wanna be ON THE GO?",
 	"Great to see you, %v! Let's get ON THE GO!",
 }
 
@@ -25,6 +25,7 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
+// Hello returns a greeting for the named person.
 func Hello(name string) string {
 
 	message := fmt.Sprintf(defaultHelloMsg, name)
@@ -37,6 +38,8 @@ func Hello(name string) string {
 
 }
 
+// Hello returns a greeting for the named person and an error if
+// name is empty.
 func HelloWithError(name string) (string, error) {
 	err := validateName(name)
 	if err == nil {
@@ -46,6 +49,7 @@ func HelloWithError(name string) (string, error) {
 	}
 }
 
+// Hello returns a random greeting for the named person.
 func RandomHello(name string) (string, error) {
 	err := validateName(name)
 	if err == nil {
@@ -54,6 +58,20 @@ func RandomHello(name string) (string, error) {
 	} else {
 		return "", err
 	}
+}
+
+// RandomHellos returns a map that associates each of the named people
+// with a greeting message.
+func RandomHellos(names []string) (map[string]string, error) {
+	messages := make(map[string]string)
+	for _, name := range names {
+		message, err := RandomHello(name)
+		if err != nil {
+			return nil, err
+		}
+		messages[name] = message
+	}
+	return messages, nil
 }
 
 func randomFormattedHelloMsg() string {
