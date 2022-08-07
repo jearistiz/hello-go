@@ -19,7 +19,7 @@ This file contains your code dependencies as well as a path-URL to find your cod
 $ go mod tidy
 ```
 
-From the official documendation:
+From the official documentation:
 *Tidy makes sure `go.mod` matches the source code in the module.
 It adds any missing modules necessary to build the current module's
 packages and dependencies, and it removes unused modules that

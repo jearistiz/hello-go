@@ -24,7 +24,7 @@ func main() {
 }
 
 const useInputName bool = true
-const defaultName string = "Juan Esteban"
+const defaultName string = ""
 const msgInputName string = ">>> Type your name, then press Enter: "
 
 // Concepts:
@@ -144,5 +144,5 @@ func logEndExec() {
 
 func logFatalEndWithError(err error) {
 	msg := fmt.Sprintf("--- End execution with errors: %v---", err)
-	log.Fatal(msg)
+	log.Println(msg)
 }
